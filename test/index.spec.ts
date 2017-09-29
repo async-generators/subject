@@ -18,6 +18,31 @@ describe("@async-generator/subject", () => {
     expect(await equal(source, expected())).to.be.true;
   })
 
+  it("should throw error when using on after disposed", async () => {
+    let source = subject<number>();
+
+    let expected = function* () {
+      yield 1; yield 2; yield 3; yield 4;
+    }
+
+    for (let item of expected()) {
+      source.next(item);
+    }
+    source.done();
+
+    for await (let item of source) { }
+
+    let error;
+
+    expect(source.isDisposed).to.be.true;
+    
+    try {
+      source.on("pull", () => { });
+    } catch (err) { error = err; }
+
+    expect(error.message).to.be.eq("Subject already disposed");
+  })
+
   it("should wait until items are pushed", async () => {
     let source = subject<number>();
 

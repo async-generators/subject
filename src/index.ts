@@ -42,9 +42,10 @@ function _Subject<T>() {
   let _buffer: T[] = [];
   let _done: boolean = false;
   let _error: any;
+  let _disposed = false;
 
   function dispose() {
-    _done = true;
+    _disposed = true;
     _signal.emit("disposed");
   }
 
@@ -73,7 +74,7 @@ function _Subject<T>() {
   }
 
   return {
-    get isDisposed() { return _done; },
+    get isDisposed() { return _disposed; },
     next: function (item: T) {
       if (_done) return -1;
       _buffer.push(item);
@@ -94,7 +95,7 @@ function _Subject<T>() {
       return terminator(iterator())[Symbol.asyncIterator]()
     },
     on(event: "disposed" | "pull", cb: (...args) => void) {
-      if (_done) throw Error("Subject is disposed");
+      if(_disposed) throw Error("Subject already disposed");
       _signal.on(event, cb);
     }
   }
