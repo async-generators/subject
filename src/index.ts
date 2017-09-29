@@ -4,13 +4,36 @@ import terminator from '@async-generators/terminator';
 const $terminated = Symbol.for("terminated");
 
 export interface Subject<T> extends AsyncIterable<T> {
+  /** 
+   * whether the subject has been disposed. 
+   */
   readonly isDisposed: boolean;
 
+  /** 
+   * push an item into the subject to yield
+   * @param {T} item the item to buffer and yield to the consumer.
+   * @returns {number} the number of items stored in the internal buffer 
+   */
   next(item: T): number;
+  /** 
+   * immediately rethrow an error to the consumer
+   * @param err the error object to rethrow
+   */
   error(err: any): void;
+  /** 
+   * signal the the pushed sequence is complete
+   */
   done(): void;
 
+  /**
+   * raised when the Subject has been disposed
+   */
   on(event: "disposed", cb: () => void);
+
+  /**
+   * raised when the Subject has yielded an item. 
+   * @param {number} cb.remaining remaining items in the internal buffer
+   */
   on(event: "pull", cb: (remaining: number) => void);
 }
 
@@ -71,6 +94,7 @@ function _Subject<T>() {
       return terminator(iterator())[Symbol.asyncIterator]()
     },
     on(event: "disposed" | "pull", cb: (...args) => void) {
+      if (_done) throw Error("Subject is disposed");
       _signal.on(event, cb);
     }
   }
