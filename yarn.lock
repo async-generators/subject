@@ -6,6 +6,10 @@
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/@async-generators/equal/-/equal-0.2.1.tgz#54c74f42c97e5a045e8cf954a80d0bbb32381a21"
 
+"@async-generators/terminator@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@async-generators/terminator/-/terminator-0.2.0.tgz#ee7195e1237a5f85702f64dad8450e558badee11"
+
 "@types/chai@^4.0.4":
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.0.4.tgz#fe86315d9a66827feeb16f73bc954688ec950e18"

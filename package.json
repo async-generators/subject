@@ -1,6 +1,6 @@
 {
   "name": "@async-generators/subject",
-  "description": "push items to a pulling iterable ",
+  "description": "push items to a pulling iterable",
   "version": "0.1.0",
   "author": {
     "name": "Meirion Hughes",
@@ -71,6 +71,7 @@
     "instrument": true
   },
   "dependencies": {
+    "@async-generators/terminator": "^0.2.0",
     "events": "^1.1.1"
   }
 }
