@@ -1,3 +1,5 @@
+(<any>Symbol)["asyncIterator"] = Symbol["asyncIterator"] || Symbol.for("asyncIterator");
+
 import { EventEmitter } from 'events';
 import terminator from '@async-generators/terminator';
 

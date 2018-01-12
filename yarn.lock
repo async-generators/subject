@@ -2,13 +2,19 @@
 # yarn lockfile v1
 
 
-"@async-generators/equal@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@async-generators/equal/-/equal-0.2.1.tgz#54c74f42c97e5a045e8cf954a80d0bbb32381a21"
+"@async-generators/equal@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@async-generators/equal/-/equal-0.6.0.tgz#af3a99439505df1d257cd01553d0e31a7338993c"
+  dependencies:
+    "@async-generators/iterable" "^0.4.0"
 
-"@async-generators/terminator@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@async-generators/terminator/-/terminator-0.2.0.tgz#ee7195e1237a5f85702f64dad8450e558badee11"
+"@async-generators/iterable@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@async-generators/iterable/-/iterable-0.4.0.tgz#24de94fdfe8fd6d62a1545bcf2a59053c4cb3c2f"
+
+"@async-generators/terminator@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@async-generators/terminator/-/terminator-0.3.0.tgz#1bbd86c4afd0a56e49123289a6897fff762dcea6"
 
 "@types/chai@^4.0.4":
   version "4.0.4"

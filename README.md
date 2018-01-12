@@ -1,15 +1,11 @@
 # subject
-![logo](https://avatars1.githubusercontent.com/u/31987273?v=4&s=100)
+![logo](https://avatars1.githubusercontent.com/u/31987273?v=4&s=110)
 
 push items to a pulling iterable 
 
 [![NPM version][npm-image]][npm-url]
 [![Travis Status][travis-image]][travis-url]
 [![Travis Status][codecov-image]][codecov-url]
-
-## Usage
-
-_package requires a system that supports async-iteration, either natively or via down-compiling_
 
 ### Install
 ```
