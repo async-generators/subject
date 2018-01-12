@@ -1,4 +1,4 @@
-(<any>Symbol)["asyncIterator"] = Symbol["asyncIterator"] || Symbol.for("asyncIterator");
+if(Symbol["asyncIterator"] === undefined) ((<any>Symbol)["asyncIterator"]) = Symbol.for("asyncIterator");
 
 import { EventEmitter } from 'events';
 import terminator from '@async-generators/terminator';
