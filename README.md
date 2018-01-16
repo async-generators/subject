@@ -13,9 +13,8 @@ npm install @async-generators/subject --save
 yarn add @async-generators/subject
 ```
 
-This package's `main` entry points to a `commonjs` distribution. 
-
-Additionally, the `module` entry points to a `es2015` distribution, which can be used by build systems, such as webpack, to directly use es2015 modules. 
+This package's `main` entry points to a `commonjs` dist. 
+The `module` entry points to a `es2015` module dist. Both require native async-generator support, or be down-compiled with a webpack loader. 
 
 ## Api
 

@@ -29,7 +29,7 @@
     "url": "https://github.com/async-generators/subject/issues"
   },
   "devDependencies": {
-    "@async-generators/equal": "^0.6.0",
+    "@async-generators/equal": "^0.7.1",
     "@types/chai": "^4.0.4",
     "@types/mocha": "^2.2.43",
     "@types/node": "^8.0.28",
@@ -42,14 +42,14 @@
     "typescript": "^2.5.2"
   },
   "scripts": {
-    "test": "nyc node_modules/mocha/bin/mocha --require source-map-support/register --compilers ts:ts-node/register test/*.ts",
+    "test": "nyc node_modules/mocha/bin/mocha --harmony test/*.ts",
     "build": "npm run build:commonjs && npm run build:es2015",
-    "build:commonjs": "tsc --project tsconfig.build.json --rootDir src/ --outDir ./dist/commonjs",
+    "build:commonjs": "tsc --project tsconfig.build.json --rootDir src/ --outDir ./dist/commonjs --module commonjs",
     "build:es2015": "tsc --project tsconfig.build.json --rootDir src/ --outDir ./dist/es2015 --module es2015",
     "cover": "codecov"
   },
   "engines": {
-    "node": ">=8.5.0"
+    "node": ">=9.0.0"
   },
   "nyc": {
     "exclude": [
@@ -61,6 +61,7 @@
       ".ts"
     ],
     "require": [
+      "source-map-support/register",
       "ts-node/register"
     ],
     "reporter": [
@@ -71,7 +72,7 @@
     "instrument": true
   },
   "dependencies": {
-    "@async-generators/terminator": "^0.3.0",
+    "@async-generators/terminator": "^0.4.0",
     "events": "^1.1.1"
   }
 }
