@@ -1,10 +1,10 @@
-import subject from '../src';
+import {coupler} from '../src';
 import equal from '@async-generators/equal';
 import { expect } from 'chai';
 
-describe("@async-generator/subject", () => {
+describe("coupler", () => {
   it("should buffer all items before iteration", async () => {
-    let source = subject<number>();
+    let source = coupler<number>();
 
     let expected = function* () {
       yield 1; yield 2; yield 3; yield 4;
@@ -19,7 +19,7 @@ describe("@async-generator/subject", () => {
   })
 
   it("should throw error when using on after disposed", async () => {
-    let source = subject<number>();
+    let source = coupler<number>();
 
     let expected = function* () {
       yield 1; yield 2; yield 3; yield 4;
@@ -44,7 +44,7 @@ describe("@async-generator/subject", () => {
   })
 
   it("should wait until items are pushed", async () => {
-    let source = subject<number>();
+    let source = coupler<number>();
 
     let expected = function* () {
       yield 1; yield 2; yield 3; yield 4;
@@ -65,7 +65,7 @@ describe("@async-generator/subject", () => {
   })
 
   it("should dispose if consumer stops iteration", async () => {
-    let source = subject<number>();
+    let source = coupler<number>();
 
     source.next(1);
     source.next(2);
@@ -82,7 +82,7 @@ describe("@async-generator/subject", () => {
   })
 
   it("should raise pull event when consumer iterates", async () => {
-    let source = subject<number>();
+    let source = coupler<number>();
 
     source.next(1);
     source.next(2);
@@ -103,7 +103,7 @@ describe("@async-generator/subject", () => {
   })
 
   it("should rethrow error", async () => {
-    let source = subject<number>();
+    let source = coupler<number>();
     let consumer = equal(source, []);
     let result;
 

@@ -1,7 +1,7 @@
 # subject
 ![logo](https://avatars1.githubusercontent.com/u/31987273?v=4&s=110)
 
-push items to a pulling iterable 
+push items to pulling iterators
 
 [![NPM version][npm-image]][npm-url]
 [![Travis Status][travis-image]][travis-url]
@@ -18,98 +18,79 @@ The `module` entry points to a `es2015` module dist. Both require native async-g
 
 ## Api
 
-### subject()
+### Soupler()
 
-<code>subject()</code> returns an iterable `Subject`, that provides three methods: `next(item)`, `error(err)`, and `done()` to push data and events to the subject. Items are buffered internally until `[Symbol.asyncIterator]` is called and items are pulled by the consuming iterator. If the consuming iterator pulls items slower than the speed they are pushed to the subject, then the internal buffer will continue to grow in size. `next()` returns the current internal buffer length, which can be used by the producer to apply back-pressure measures. `error(err)` will cause the iterator to rethrow the given error to the consumer. 
+<code>Subject</code> that provides three methods: `next(item)`, `error(err)`, and `done()` to push data and events. When `[Symbol.asyncIterator]` is called an internal subscription is created. items are buffered (per iterator) until they are pulled by the consuming iterator. If the consuming iterator pulls items slower than the speed they are pushed to the subject, then the internal buffer will continue to grow in size. `error(err)` will cause the iterator to rethrow the given error to the consumer and dispose of the subject.
 
 ## Example
 
 example.js
 ```js
-const subject = require('@async-generators/subject').default;
+const {Subject} = require('@async-generators/subject');
 
-async function delay(duration) {
-  return new Promise(r => setTimeout(r, duration));
+let subject = new Subject<number>();
+
+async function* source(){
+  yield 1; yield 2; yield 3; yield 4;
 }
 
 async function main() {
-  let limit = 2;
-  let buffer = subject();
-
-  let source = function* () {
-    for (let i = 0; i < 6; i++) {
-      yield i;
+  let reader = async function () {
+    for await (let item of subject) {
+      console.log("PULL:", item);
     }
+  };
+
+  let readers = [reader(), reader()];
+  
+  let writer = async function () {
+    for await (let item of source()){
+      console.log("PUSH:", item);
+      subject.next(item);
+    }
+    subject.done();
   }
 
-  let producer = new Promise(async done => {
-    let count = 0;
-    for (let item of source()) {
-      if (count >= 2) {
-        console.log("back-pressure");
-        await delay(200);
-      }
-      console.log("produced", item);
-      count = buffer.next(item);
-      console.log("count", count);
-    }
-    buffer.done();
-    done();
-  });
-
-  for await (let item of buffer) {
-    await delay(100);
-    console.log("consumed", item);
-  }
-
-  await producer;
+  await writer();
+  await Promise.all(readers);
 }
 
-main();
-
+main().catch(console.log);
 ```
 
-Execute with the latest node.js: 
+Execute with the latest node.js 9: 
 
 ```
-node --harmony-async-iteration example.js
+node --harmony example.js
 ```
 
 output:
 ```
-produced 0
-count 1
-produced 1
-count 2
-back-pressure
-consumed 0
-produced 2
-count 1
-produced 3
-count 2
-back-pressure
-consumed 1
-consumed 2
-produced 4
-count 1
-produced 5
-count 2
-consumed 3
-consumed 4
-consumed 5
+PUSH: 1
+PUSH: 2
+PULL: 1
+PULL: 1
+PUSH: 3
+PULL: 2
+PULL: 2
+PUSH: 4
+PULL: 3
+PULL: 3
+PULL: 4
+PULL: 4
 ```
 ## Typescript
 
 This library is fully typed and can be imported using: 
 
 ```ts
-import subject from '@async-generators/subject');
+import {Subject} from '@async-generators/subject');
 ```
 
 It is also possible to directly execute your [properly configured](https://stackoverflow.com/a/43694282/1657476) typescript with [ts-node](https://www.npmjs.com/package/ts-node):
 
 ```
-ts-node --harmony_async_iteration foo.ts
+ts-node --harmony foo.ts
 ```
 
 [npm-url]: https://npmjs.org/package/@async-generators/subject
