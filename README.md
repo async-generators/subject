@@ -20,7 +20,7 @@ The `module` entry points to a `es2015` module dist. Both require native async-g
 
 ### Soupler()
 
-<code>Subject</code> that provides three methods: `next(item)`, `error(err)`, and `done()` to push data and events. When `[Symbol.asyncIterator]` is called an internal subscription is created. items are buffered (per iterator) until they are pulled by the consuming iterator. If the consuming iterator pulls items slower than the speed they are pushed to the subject, then the internal buffer will continue to grow in size. `error(err)` will cause the iterator to rethrow the given error to the consumer and dispose of the subject.
+<code>Subject</code> that provides three methods: `next(item)`, `error(err)`, and `done()` to push data and events. When `[Symbol.asyncIterator]` is called an internal subscription is created. pushed items are buffered (per iterator) until they are pulled by the consuming iterator. If the consuming iterator pulls items slower than the speed they are pushed to the subject, then the internal buffer will continue to grow in size. `error(err)` will cause the iterator to rethrow the given error to the consumer and dispose of the subject.
 
 ## Example
 
